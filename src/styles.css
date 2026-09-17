@@ -1,0 +1,817 @@
+@import "tailwindcss";
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/*
+ * The Future Montessori School — design system.
+ * Derived from the official school crest: deep emerald green, academic gold, charcoal ink, ivory.
+ *
+ * PERFORMANCE OPTIMIZATIONS
+ * - Reduced expensive visual effects
+ * - Optimized transitions
+ * - GPU-friendly transforms
+ * - Prevent unnecessary layout work
+ * - Smooth scrolling without heavy effects
+ * - Optimized image rendering
+ * - Reduced motion support
+ */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
+
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary-deep: var(--primary-deep);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-gold: var(--gold);
+  --color-gold-foreground: var(--gold-foreground);
+  --color-ink: var(--ink);
+  --color-ink-foreground: var(--ink-foreground);
+  --color-ink-muted: var(--ink-muted);
+  --color-cream: var(--cream);
+  --color-sand: var(--sand);
+  --color-success: var(--success);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-ring-offset-background: var(--background);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --font-display:
+    "Playfair Display",
+    "Georgia",
+    "Times New Roman",
+    serif;
+
+  --font-sans:
+    "Plus Jakarta Sans",
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    sans-serif;
+
+  /*
+   * Lightweight shadows.
+   * These are intentionally kept simpler because large blurred shadows
+   * can increase paint/rendering cost while scrolling.
+   */
+  --shadow-soft:
+    0 1px 3px oklch(0.2 0.02 155 / 5%),
+    0 8px 22px -10px oklch(0.2 0.02 155 / 10%);
+
+  --shadow-lift:
+    0 4px 10px oklch(0.2 0.02 155 / 7%),
+    0 16px 32px -12px oklch(0.2 0.02 155 / 16%);
+
+  --shadow-crimson:
+    0 10px 28px -8px oklch(0.44 0.17 155 / 30%);
+
+  --shadow-gold:
+    0 8px 24px -10px oklch(0.79 0.14 80 / 25%);
+
+  --ease-out-soft: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-spin-slow: spin 40s linear infinite;
+  --animate-scroll-hint: scroll-hint 1.8s ease-in-out infinite;
+  --animate-pulse-subtle: pulse-subtle 3s ease-in-out infinite;
+
+  @keyframes float {
+
+    0%,
+    100% {
+      transform: translate3d(0, 0, 0);
+    }
+
+    50% {
+      transform: translate3d(0, -8px, 0);
+    }
+  }
+
+  @keyframes pulse-subtle {
+
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.85;
+      transform: scale(1.02);
+    }
+  }
+
+  @keyframes scroll-hint {
+    0% {
+      transform: translate3d(0, 0, 0);
+      opacity: 0.9;
+    }
+
+    100% {
+      transform: translate3d(0, 10px, 0);
+      opacity: 0;
+    }
+  }
+}
+
+/* =========================================================
+   ROOT COLORS
+========================================================= */
+
+:root {
+  --radius: 1rem;
+
+  --background: oklch(0.99 0.003 140);
+  --foreground: oklch(0.18 0.015 155);
+
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.18 0.015 155);
+
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.18 0.015 155);
+
+  --primary: oklch(0.44 0.17 155);
+  --primary-deep: oklch(0.35 0.15 155);
+  --primary-foreground: oklch(0.99 0.005 85);
+
+  --secondary: oklch(0.96 0.015 140);
+  --secondary-foreground: oklch(0.22 0.02 155);
+
+  --muted: oklch(0.955 0.01 140);
+  --muted-foreground: oklch(0.46 0.02 155);
+
+  --accent: oklch(0.94 0.035 155);
+  --accent-foreground: oklch(0.40 0.16 155);
+
+  --gold: oklch(0.79 0.14 80);
+  --gold-foreground: oklch(0.22 0.04 60);
+
+  --ink: oklch(0.16 0.02 155);
+  --ink-foreground: oklch(0.98 0.005 85);
+  --ink-muted: oklch(0.72 0.01 140);
+
+  --cream: oklch(0.985 0.01 140);
+  --sand: oklch(0.94 0.02 135);
+
+  --success: oklch(0.62 0.16 150);
+
+  --destructive: oklch(0.55 0.2 25);
+  --destructive-foreground: oklch(0.99 0.006 80);
+
+  --border: oklch(0.9 0.012 140);
+  --input: oklch(0.88 0.012 140);
+  --ring: oklch(0.44 0.17 155);
+
+  --chart-1: oklch(0.44 0.17 155);
+  --chart-2: oklch(0.79 0.14 80);
+  --chart-3: oklch(0.18 0.015 155);
+  --chart-4: oklch(0.62 0.16 150);
+  --chart-5: oklch(0.7 0.1 50);
+
+  --sidebar: oklch(0.985 0.01 140);
+  --sidebar-foreground: oklch(0.18 0.015 155);
+  --sidebar-primary: oklch(0.44 0.17 155);
+  --sidebar-primary-foreground: oklch(0.99 0.006 80);
+  --sidebar-accent: oklch(0.94 0.035 155);
+  --sidebar-accent-foreground: oklch(0.40 0.16 155);
+  --sidebar-border: oklch(0.9 0.012 140);
+  --sidebar-ring: oklch(0.44 0.17 155);
+}
+
+/* =========================================================
+   DARK MODE
+========================================================= */
+
+.dark {
+  --background: oklch(0.16 0.015 155);
+  --foreground: oklch(0.97 0.006 80);
+
+  --card: oklch(0.20 0.015 155);
+  --card-foreground: oklch(0.97 0.006 80);
+
+  --popover: oklch(0.20 0.015 155);
+  --popover-foreground: oklch(0.97 0.006 80);
+
+  --primary: oklch(0.62 0.18 155);
+  --primary-deep: oklch(0.50 0.16 155);
+  --primary-foreground: oklch(0.99 0.006 80);
+
+  --secondary: oklch(0.24 0.015 155);
+  --secondary-foreground: oklch(0.97 0.006 80);
+
+  --muted: oklch(0.24 0.015 155);
+  --muted-foreground: oklch(0.7 0.01 140);
+
+  --accent: oklch(0.28 0.05 155);
+  --accent-foreground: oklch(0.92 0.06 155);
+
+  --border: oklch(1 0 0 / 10%);
+  --input: oklch(1 0 0 / 15%);
+  --ring: oklch(0.62 0.18 155);
+}
+
+/* =========================================================
+   BASE PERFORMANCE
+========================================================= */
+
+@layer base {
+
+  *,
+  *::before,
+  *::after {
+    border-color: var(--color-border);
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeSpeed;
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+
+    font-feature-settings: "ss01", "cv11";
+
+    overflow-x: hidden;
+
+    /*
+     * Helps browser optimize rendering.
+     */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /*
+     * Prevent unnecessary horizontal layout calculations.
+     */
+    min-width: 0;
+  }
+
+  /*
+   * Images should never cause unexpected layout shifts.
+   */
+  img,
+  picture,
+  video,
+  canvas {
+    display: block;
+    max-width: 100%;
+  }
+
+  img {
+    height: auto;
+    vertical-align: middle;
+    image-rendering: auto;
+  }
+
+  /*
+   * Faster rendering for off-screen sections.
+   */
+  section {
+    contain: layout style;
+  }
+
+  h1,
+  h2,
+  h3,
+  .font-display {
+    font-family: var(--font-display);
+    font-variation-settings: "opsz" 144, "SOFT" 30;
+    letter-spacing: -0.015em;
+  }
+
+  ::selection {
+    background: var(--color-primary);
+    color: var(--color-primary-foreground);
+  }
+
+  /*
+   * Disable expensive motion when user prefers reduced motion.
+   */
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* =========================================================
+   LAYOUT PRIMITIVES
+========================================================= */
+
+@utility container-x {
+  width: 100%;
+  max-width: 80rem;
+  margin-inline: auto;
+  padding-inline: 1.25rem;
+
+  @media (min-width: 640px) {
+    padding-inline: 2rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding-inline: 2.5rem;
+  }
+}
+
+@utility section-y {
+  padding-block: 4.5rem;
+
+  @media (min-width: 1024px) {
+    padding-block: 7rem;
+  }
+}
+
+/* =========================================================
+   TYPOGRAPHY
+========================================================= */
+
+@utility eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+
+  color: var(--color-primary);
+
+  &::before {
+    content: "";
+    width: 1.5rem;
+    height: 2px;
+    background: currentColor;
+    border-radius: 999px;
+  }
+}
+
+/* =========================================================
+   SURFACES
+========================================================= */
+
+@utility surface-card {
+  background: var(--color-card);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+
+  box-shadow: var(--shadow-soft);
+
+  /*
+   * Only transform, shadow and border are animated.
+   * This is much cheaper than animating layout properties.
+   */
+  transition:
+    transform 0.3s var(--ease-out-soft),
+    box-shadow 0.3s var(--ease-out-soft),
+    border-color 0.3s var(--ease-out-soft);
+
+  /*
+   * Browser can optimize transformed cards.
+   */
+  backface-visibility: hidden;
+}
+
+@utility surface-card-hover {
+  &:hover {
+    transform: translate3d(0, -4px, 0);
+    box-shadow: var(--shadow-lift);
+
+    border-color: color-mix(in oklab,
+        var(--color-primary) 30%,
+        var(--color-border));
+  }
+
+  &:focus-within {
+    box-shadow: var(--shadow-lift);
+  }
+}
+
+@utility surface-ink {
+  background:
+    radial-gradient(60rem 30rem at 100% 0%,
+      color-mix(in oklab, var(--color-primary) 30%, transparent),
+      transparent 60%),
+    var(--color-ink);
+
+  color: var(--color-ink-foreground);
+}
+
+@utility surface-cream {
+  background: var(--color-cream);
+}
+
+@utility dot-grid {
+  background-image:
+    radial-gradient(color-mix(in oklab, var(--color-foreground) 9%, transparent) 1px,
+      transparent 1px);
+
+  background-size: 22px 22px;
+}
+
+/* =========================================================
+   IMAGE PERFORMANCE
+========================================================= */
+
+/*
+ * General image wrapper.
+ */
+@utility image-container {
+  position: relative;
+  overflow: hidden;
+  contain: layout paint;
+}
+
+/*
+ * Images that are being transformed.
+ */
+@utility img-optimized {
+  display: block;
+  width: 100%;
+  height: auto;
+
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/*
+ * Image zoom effect.
+ * Kept lightweight for smoother scrolling.
+ */
+@utility img-zoom {
+  overflow: hidden;
+  contain: paint;
+
+  & img {
+    display: block;
+    width: 100%;
+    transition: transform 0.4s var(--ease-out-soft);
+    transform: translateZ(0);
+    backface-visibility: hidden;
+  }
+
+  &:hover img {
+    transform: scale(1.03) translateZ(0);
+  }
+}
+
+/*
+ * Standard responsive image.
+ */
+@utility img-cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/*
+ * For posters where cropping should not happen.
+ */
+@utility img-contain {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  display: block;
+}
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+@utility nav-link {
+  position: relative;
+
+  padding-block: 0.25rem;
+
+  font-weight: 500;
+  color: inherit;
+
+  transition: color 0.2s ease;
+
+  &::after {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+
+    width: 100%;
+    height: 2px;
+
+    border-radius: 999px;
+    background: var(--color-primary);
+
+    transform: scaleX(0);
+    transform-origin: right;
+
+    transition: transform 0.25s var(--ease-out-soft);
+  }
+
+  &:hover::after,
+  &[data-status="active"]::after,
+  &[aria-current="page"]::after {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+
+  &[data-status="active"],
+  &[aria-current="page"] {
+    color: var(--color-primary);
+  }
+}
+
+/* =========================================================
+   GPU / TRANSFORM HELPERS
+========================================================= */
+
+@utility gpu {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+@utility will-transform {
+  will-change: transform;
+}
+
+@utility perspective-1000 {
+  perspective: 1000px;
+}
+
+@utility preserve-3d {
+  transform-style: preserve-3d;
+}
+
+/* =========================================================
+   TEXT BALANCE
+========================================================= */
+
+@utility text-balance {
+  text-wrap: balance;
+}
+
+/* =========================================================
+   MODERN PILL BADGE
+========================================================= */
+
+@utility badge-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+
+  padding: 0.35rem 0.85rem;
+
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+
+  border-radius: 9999px;
+
+  background:
+    color-mix(in oklab,
+      var(--color-primary) 8%,
+      var(--color-background));
+
+  color: var(--color-primary);
+
+  border: 1px solid color-mix(in oklab,
+      var(--color-primary) 20%,
+      transparent);
+}
+
+/* =========================================================
+   GLASS PANEL
+========================================================= */
+
+/*
+ * Backdrop blur is expensive during scrolling.
+ * Keep it available, but use a lighter blur.
+ */
+@utility glass-panel {
+  background:
+    color-mix(in oklab,
+      var(--color-card) 82%,
+      transparent);
+
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  border: 1px solid color-mix(in oklab,
+      var(--color-foreground) 10%,
+      transparent);
+
+  box-shadow:
+    0 8px 24px -10px oklch(0 0 0 / 12%);
+}
+
+/* =========================================================
+   HERO BACKGROUND
+========================================================= */
+
+@utility hero-radial-glow {
+  background-image:
+    radial-gradient(circle at 15% 15%,
+      color-mix(in oklab,
+        var(--color-primary) 7%,
+        transparent) 0%,
+      transparent 50%),
+    radial-gradient(circle at 85% 60%,
+      color-mix(in oklab,
+        var(--color-gold) 8%,
+        transparent) 0%,
+      transparent 45%);
+}
+
+/* =========================================================
+   ANIMATIONS
+========================================================= */
+
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 20px, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: scale(0.98) translateZ(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+  }
+}
+
+@utility animate-fade-up {
+  animation:
+    fadeUp 0.45s var(--ease-out-soft) both;
+}
+
+@utility animate-scale-in {
+  animation:
+    fadeInScale 0.4s var(--ease-out-soft) both;
+}
+
+/* =========================================================
+   PERFORMANCE HELPERS
+========================================================= */
+
+/*
+ * Use on large below-the-fold sections if required.
+ * Browser can skip rendering work until needed.
+ */
+@utility content-auto {
+  content-visibility: auto;
+  contain-intrinsic-size: 500px;
+}
+
+/*
+ * Prevent paint outside image/card bounds.
+ */
+@utility paint-contained {
+  contain: paint;
+}
+
+/*
+ * Lightweight transition for buttons/cards.
+ */
+@utility transition-fast {
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+/* =========================================================
+   MOBILE PERFORMANCE
+========================================================= */
+
+@media (max-width: 639px) {
+
+  /*
+   * Avoid expensive hover effects on touch devices.
+   */
+  .surface-card:hover {
+    transform: none;
+  }
+
+  /*
+   * Reduce shadow painting on small screens.
+   */
+  .surface-card {
+    box-shadow: var(--shadow-soft);
+  }
+
+  /*
+   * Disable image zoom on mobile.
+   * It doesn't provide useful interaction on touch screens
+   * and saves GPU work.
+   */
+  .img-zoom:hover img {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   LOW POWER / REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+  .img-zoom img,
+  .surface-card,
+  img {
+    transition: none !important;
+  }
+
+  .img-zoom:hover img,
+  .surface-card:hover {
+    transform: none !important;
+  }
+}
+
+/* =========================================================
+   PRINT
+========================================================= */
+
+@media print {
+
+  *,
+  *::before,
+  *::after {
+    box-shadow: none !important;
+    text-shadow: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}
