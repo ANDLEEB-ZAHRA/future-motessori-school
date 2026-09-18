@@ -212,8 +212,8 @@ function MontessoriPage() {
           </div>
 
           <div className="lg:col-span-5 space-y-4">
-            {/* Admission Poster — below the fold, so lazy-load it (no eager/high-priority) */}
-            <div className="overflow-hidden rounded-3xl shadow-lift border border-border group bg-secondary/20">
+            {/* Admission Poster — full card image with zoom/crop */}
+            <div className="overflow-hidden rounded-3xl shadow-lift border border-border group bg-secondary/20 aspect-[4/3]">
               <img
                 src={images.admissionPoster01.src}
                 alt={images.admissionPoster01.alt}
@@ -221,8 +221,7 @@ function MontessoriPage() {
                 height={images.admissionPoster01.height}
                 loading="lazy"
                 decoding="async"
-                style={{ aspectRatio: images.admissionPoster01.aspectRatio }}
-                className="block w-full h-auto object-contain object-center transition-transform duration-700 group-hover:scale-103"
+                className="block w-full h-full object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
             </div>
 
@@ -236,7 +235,9 @@ function MontessoriPage() {
                 height={images.studentSnackTime.height}
                 loading="lazy"
                 decoding="async"
-                style={{ aspectRatio: images.studentSnackTime.aspectRatio }}
+                style={{
+                  aspectRatio: images.studentSnackTime.aspectRatio,
+                }}
                 className="block w-full h-56 object-cover object-top transition-transform duration-700 group-hover:scale-103"
               />
             </div>
@@ -253,3 +254,4 @@ function MontessoriPage() {
     </>
   );
 }
+

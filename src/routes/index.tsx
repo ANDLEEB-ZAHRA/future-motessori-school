@@ -118,7 +118,7 @@ const campusShowcaseImages = [
 ];
 
 /* Poster-style news images (e.g. Admissions banner) ko crop hone se bachane ke liye */
-const posterCategories = ["Admissions", "Announcements"];
+
 
 function HomePage() {
   const [activeSlide, setActiveSlide] = useState(0);
@@ -227,8 +227,8 @@ function HomePage() {
               </div>
 
               {/* Trust Stats & Highlights */}
-              <div className="grid grid-cols-3 gap-3 sm:gap-4 border-t border-border/80 pt-6 mt-8">
-                <div className="rounded-xl bg-card/60 p-3 sm:p-4 border border-border/60">
+              <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-4 border-t border-border/80 pt-6 mt-8">
+                <div className="min-w-0 rounded-xl bg-card/60 p-3 sm:p-4 border border-border/60">
                   <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                     Campus
                   </p>
@@ -240,7 +240,7 @@ function HomePage() {
                   </p>
                 </div>
 
-                <div className="rounded-xl bg-card/60 p-3 sm:p-4 border border-border/60">
+                <div className="min-w-0 rounded-xl bg-card/60 p-3 sm:p-4 border border-border/60">
                   <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
                     Levels
                   </p>
@@ -252,14 +252,14 @@ function HomePage() {
                   </p>
                 </div>
 
-                <div className="rounded-xl bg-card/60 p-3 sm:p-4 border border-border/60">
-                  <p className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground">
+                <div className="min-w-0 rounded-xl bg-card/60 p-3 sm:p-4 border border-border/60">
+                  <p className="text-[10px] sm:text-[11px] font-semibold uppercase tracking-wider text-muted-foreground break-words">
                     Scholarships
                   </p>
-                  <p className="mt-1 font-display text-lg sm:text-xl font-bold text-foreground">
+                  <p className="mt-1 font-display text-lg sm:text-xl font-bold text-foreground break-words">
                     5 Tracks
                   </p>
-                  <p className="text-[11px] text-muted-foreground truncate">
+                  <p className="text-[10px] sm:text-[11px] text-muted-foreground break-words leading-4">
                     Merit & Need Based
                   </p>
                 </div>
@@ -410,7 +410,7 @@ function HomePage() {
             </Button>
           </div>
 
-          <div className="mt-12 grid gap-8 lg:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {programs.map((p, index) => (
               <article
                 key={p.slug}
@@ -681,21 +681,27 @@ function HomePage() {
           {/* Quick Stats Ribbon */}
           <div className="mt-12 grid gap-4 sm:grid-cols-3">
             <div className="transition-transform duration-300 hover:-translate-y-1">
-              <Stat value="5 Types" label="Scholarship Categories" />
+              <div className="min-w-0 [&>*]:min-w-0 [&>*]:max-w-full">
+                <Stat value="5 Types" label="Scholarship Categories" />
+              </div>
             </div>
 
             <div className="transition-transform duration-300 hover:-translate-y-1">
-              <Stat
-                value="3 Levels"
-                label="Montessori • Primary • Middle"
-              />
+              <div className="min-w-0 [&>*]:min-w-0 [&>*]:max-w-full">
+                <Stat
+                  value="3 Levels"
+                  label="Montessori • Primary • Middle"
+                />
+              </div>
             </div>
 
             <div className="transition-transform duration-300 hover:-translate-y-1">
-              <Stat
-                value="Regular MTM"
-                label="Mother-Teacher Meeting"
-              />
+              <div className="min-w-0 [&>*]:min-w-0 [&>*]:max-w-full">
+                <Stat
+                  value="Regular MTM"
+                  label="Mother-Teacher Meeting"
+                />
+              </div>
             </div>
           </div>
         </div>
@@ -784,9 +790,9 @@ function HomePage() {
             </Button>
           </div>
 
-          <div className="mt-12 grid gap-8 lg:grid-cols-3">
+          <div className="mt-12 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 lg:gap-8">
             {news.slice(0, 3).map((n, index) => {
-              const isPoster = posterCategories.includes(n.category);
+              const isPoster = n.category === "Admissions";
 
               return (
                 <article
@@ -807,7 +813,7 @@ function HomePage() {
                         loading="lazy"
                         decoding="async"
                         className={`h-full w-full transition-transform duration-700 group-hover:scale-105 ${isPoster
-                          ? "object-contain object-center"
+                          ? "object-cover object-center scale-105 group-hover:scale-110"
                           : "object-cover object-center"
                           }`}
                       />
