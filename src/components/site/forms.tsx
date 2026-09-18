@@ -11,25 +11,58 @@ import { programs } from "@/data/programs";
 const phoneRule = z
   .string()
   .min(7, "Enter a phone number we can reach you on")
+  .max(20, "Phone number looks too long")
   .regex(/^[0-9+\-\s()]+$/, "Use digits, spaces, + or - only");
 
 const admissionSchema = z.object({
-  parentName: z.string().min(3, "Please enter the parent or guardian name"),
-  childName: z.string().min(2, "Please enter the child's name"),
+  parentName: z
+    .string()
+    .min(3, "Please enter the parent or guardian name")
+    .max(60, "Keep this under 60 characters"),
+  childName: z
+    .string()
+    .min(2, "Please enter the child's name")
+    .max(60, "Keep this under 60 characters"),
   age: z
     .string()
     .min(1, "Please enter the child's age")
-    .regex(/^[0-9]{1,2}$/, "Enter a valid age in years"),
-  program: z.string().min(1, "Choose a class level"),
-  session: z
+    .max(2, "Enter a valid age")
+    .regex(/^[0-9]{1,2}$/, "Age must be a number")
+    .refine((val) => Number(val) >= 1 && Number(val) <= 18, {
+      message: "Age must be between 1 and 18 years",
+    }),
+  program: z
     .string()
-    .min(1, "Please select which session you are applying for"),
+    .min(1, "Choose a class level")
+    .max(100, "Selected class level is invalid"),
+  session: z.enum(["August Session", "March Session"], {
+    errorMap: () => ({ message: "Please select which session you are applying for" }),
+  }),
   phone: phoneRule,
   parentContact: phoneRule,
-  address: z.string().min(5, "Please enter your home address"),
-  previousSchool: z.string().max(200).optional(),
-  email: z.string().email("Enter a valid email").or(z.literal("")),
-  message: z.string().max(1000).optional(),
+  address: z
+    .string()
+    .min(10, "Please enter your full home address")
+    .max(150, "Keep the address under 150 characters"),
+  previousSchool: z
+    .string()
+    .max(100, "Keep this under 100 characters")
+    .optional()
+    .refine((val) => !val || val.trim().length >= 3, {
+      message: "Enter at least 3 characters, or leave this blank",
+    }),
+  email: z
+    .string()
+    .max(100, "Keep the email under 100 characters")
+    .email("Enter a valid email")
+    .or(z.literal("")),
+  message: z
+    .string()
+    .max(500, "Keep this under 500 characters")
+    .optional()
+    .refine((val) => !val || val.trim().length >= 10, {
+      message: "Write at least a sentence, or leave this blank",
+    }),
 });
 
 const contactSchema = z.object({
@@ -129,13 +162,33 @@ export function AdmissionInquiryForm() {
       </p>
       <div className="mt-6 grid gap-5 sm:grid-cols-2">
         <Field label="Parent / guardian name *" name="parentName" error={errors["parentName"]}>
-          <Input id="parentName" name="parentName" autoComplete="name" placeholder="Full name" className="rounded-xl" />
+          <Input
+            id="parentName"
+            name="parentName"
+            autoComplete="name"
+            placeholder="Full name"
+            maxLength={60}
+            className="rounded-xl"
+          />
         </Field>
         <Field label="Child's name *" name="childName" error={errors["childName"]}>
-          <Input id="childName" name="childName" placeholder="Child's full name" className="rounded-xl" />
+          <Input
+            id="childName"
+            name="childName"
+            placeholder="Child's full name"
+            maxLength={60}
+            className="rounded-xl"
+          />
         </Field>
         <Field label="Child's age *" name="age" error={errors["age"]}>
-          <Input id="age" name="age" inputMode="numeric" placeholder="e.g. 4" className="rounded-xl" />
+          <Input
+            id="age"
+            name="age"
+            inputMode="numeric"
+            placeholder="e.g. 4"
+            maxLength={2}
+            className="rounded-xl"
+          />
         </Field>
         <Field label="Class level *" name="program" error={errors["program"]}>
           <select
@@ -165,34 +218,69 @@ export function AdmissionInquiryForm() {
           </select>
         </Field>
         <Field label="Phone number *" name="phone" error={errors["phone"]}>
-          <Input id="phone" name="phone" inputMode="tel" placeholder="03XX-XXXXXXX" className="rounded-xl" />
+          <Input
+            id="phone"
+            name="phone"
+            inputMode="tel"
+            placeholder="03XX-XXXXXXX"
+            maxLength={20}
+            className="rounded-xl"
+          />
         </Field>
         <Field label="Parent contact number *" name="parentContact" error={errors["parentContact"]}>
-          <Input id="parentContact" name="parentContact" inputMode="tel" placeholder="03XX-XXXXXXX" className="rounded-xl" />
+          <Input
+            id="parentContact"
+            name="parentContact"
+            inputMode="tel"
+            placeholder="03XX-XXXXXXX"
+            maxLength={20}
+            className="rounded-xl"
+          />
         </Field>
         <div className="sm:col-span-2">
           <Field label="Home address *" name="address" error={errors["address"]}>
-            <Textarea id="address" name="address" rows={2} placeholder="House #, street, area, city" className="rounded-xl" />
+            <Textarea
+              id="address"
+              name="address"
+              rows={2}
+              placeholder="House #, street, area, city"
+              maxLength={150}
+              className="rounded-xl"
+            />
           </Field>
         </div>
         <Field
           label="Previous school (if any)"
           name="previousSchool"
           error={errors["previousSchool"]}
+          hint="Optional — 3 to 100 characters if provided"
         >
-          <Input id="previousSchool" name="previousSchool" placeholder="Name of previous school" className="rounded-xl" />
+          <Input
+            id="previousSchool"
+            name="previousSchool"
+            placeholder="Name of previous school"
+            maxLength={100}
+            className="rounded-xl"
+          />
         </Field>
         <Field label="Email address (optional)" name="email" error={errors["email"]}>
-          <Input id="email" name="email" type="email" placeholder="you@example.com" className="rounded-xl" />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="you@example.com"
+            maxLength={100}
+            className="rounded-xl"
+          />
         </Field>
         <div className="sm:col-span-2">
           <Field
             label="Additional Notes / Questions (optional)"
             name="message"
             error={errors["message"]}
-            hint="Scholarship inquiry, preferred start date, or anything else we should know…"
+            hint="Optional — 10 to 500 characters if provided. Scholarship inquiry, preferred start date, or anything else we should know…"
           >
-            <Textarea id="message" name="message" rows={4} className="rounded-xl" />
+            <Textarea id="message" name="message" rows={4} maxLength={500} className="rounded-xl" />
           </Field>
         </div>
       </div>
